@@ -51,7 +51,7 @@ public class Items {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((item_name == null) ? 0 : item_name.hashCode());
-        result = prime * result + ((ItemID == null) ? 0 : itemID.hashCode());
+        result = prime * result + ((ItemID == null) ? 0 : ItemID.hashCode());
         result = prime * result + ((price == null) ? 0 : price.hashCode());
         return result;
     }

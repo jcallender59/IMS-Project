@@ -12,7 +12,6 @@ import com.qa.ims.persistence.domain.Items;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Items;
 import com.qa.ims.utils.DBUtils;
 
 public class ItemsDAO implements Dao<ItemsDAO> {
@@ -21,7 +20,7 @@ public class ItemsDAO implements Dao<ItemsDAO> {
 
     @Override
     public Items modelFromResultSet(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("ItemID");
+        Long ItemID = resultSet.getLong("ItemID");
         String item_name = resultSet.getString("item_name");
         Double price = resultSet.getDouble("price");
         return new Items(ItemID, item_name, price);
@@ -33,15 +32,15 @@ public class ItemsDAO implements Dao<ItemsDAO> {
      * @return A list of items
      */
     @Override
-    public List<Items> readAll() {
+    public List<ItemsDAO> readAll() {
         try (Connection connection = DBUtils.getInstance().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM items");) {
-            List<Items> items = new ArrayList<>();
+            List<Items> Items = new ArrayList<>();
             while (resultSet.next()) {
-                items.add(modelFromResultSet(resultSet));
+                Items.add(modelFromResultSet(resultSet));
             }
-            return items;
+            return Items;
         } catch (SQLException e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
