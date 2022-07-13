@@ -1,12 +1,42 @@
-drop schema ims;
+DROP SCHEMA IF EXISTS ims;
 
-CREATE SCHEMA IF NOT EXISTS `ims`;
+CREATE SCHEMA IF NOT EXISTS ims;
 
-USE `ims` ;
+use ims;
 
-CREATE TABLE IF NOT EXISTS `ims`.`customers` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `orders_items`;
+DROP TABLE IF EXISTS `items`;
+DROP TABLE IF EXISTS `orders`;
+DROP TABLE IF EXISTS `customers`;
+
+CREATE TABLE IF NOT EXISTS `customers` (
+    `ID` INT(11) NOT NULL AUTO_INCREMENT,
     `first_name` VARCHAR(40) DEFAULT NULL,
     `surname` VARCHAR(40) DEFAULT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`ID`)
+);
+
+CREATE TABLE IF NOT EXISTS `items` (
+	`ItemID` INT(11) NOT NULL AUTO_INCREMENT,
+    `item_name` VARCHAR(40) DEFAULT NULL,
+    `price` DOUBLE DEFAULT NULL,
+    PRIMARY KEY (`ItemID`)
+);
+
+CREATE TABLE IF NOT EXISTS `orders` (
+	`OrderID` INT(11) NOT NULL AUTO_INCREMENT,
+    `Customer_ID` INT(11) NOT NULL,
+    PRIMARY KEY (`OrderID`),
+    FOREIGN KEY (`Customer_id`) REFERENCES customers(`ID`)
+);
+
+CREATE TABLE IF NOT EXISTS `orders_items` (
+    `ID` INT(11) NOT NULL AUTO_INCREMENT,
+    `ItemID` INT(11) NOT NULL,
+    `OrderID` INT(11) NOT NULL,
+    `Quantity` INT(11) NOT NULL,
+    `Price` DOUBLE NOT NULL,
+    PRIMARY KEY (`ID`),
+    FOREIGN KEY (`OrderID`) REFERENCES orders(`OrderID`),
+    FOREIGN KEY (`ItemID`) REFERENCES items(`ItemID`)
 );

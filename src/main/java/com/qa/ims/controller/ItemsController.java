@@ -2,11 +2,11 @@ package com.qa.ims.controller;
 
 import java.util.List;
 
+import com.qa.ims.persistence.domain.Items;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.ItemsDAO;
-import com.qa.ims.persistence.domain.Items;
 import com.qa.ims.utils.Utils;
 
 /**
@@ -22,7 +22,7 @@ public class ItemsController implements CrudController<Items> {
 
 	public ItemsController(ItemsDAO itemsDAO, Utils utils) {
 		super();
-		this.itemsDAO = ItemsDAO;
+		this.itemsDAO = itemsDAO;
 		this.utils = utils;
 	}
 
@@ -32,7 +32,7 @@ public class ItemsController implements CrudController<Items> {
 	@Override
 	public List<Items> readAll() {
 		List<Items> items = ItemsDAO.readAll();
-		for (Items item : items) {
+		for (Items items : items) {
 			LOGGER.info(items);
 		}
 		return items;
@@ -42,12 +42,12 @@ public class ItemsController implements CrudController<Items> {
 	 * Creates a items by taking in user input
 	 */
 	@Override
-	public Items create() {
+	public com.qa.ims.persistence.dao.ItemsDAO create() {
 		LOGGER.info("Please enter an item name");
-		String item_name = utils.getString();
+		String item_name = Utils.getString();
 		LOGGER.info("Please enter a price");
-		Double price= utils.getDouble();
-		Items items = itemsDAO.create(new items(item_name, price));
+		Double price= Utils.getDouble();
+		com.qa.ims.persistence.dao.ItemsDAO items = ItemsDAO.create(new Items(item_name, price));
 		LOGGER.info("items created");
 		return items;
 	}
@@ -56,14 +56,14 @@ public class ItemsController implements CrudController<Items> {
 	 * Updates an existing items by taking in user input
 	 */
 	@Override
-	public items update() {
+	public com.qa.ims.persistence.dao.ItemsDAO update() {
 		LOGGER.info("Please enter the id of the items you would like to update");
 		Long ItemID = utils.getLong();
 		LOGGER.info("Please enter an item name");
 		String firstName = utils.getString();
 		LOGGER.info("Please enter a price");
 		Double price = utils.getDouble();
-		items items = itemsDAO.update(new items(id, item_name, price));
+		com.qa.ims.persistence.dao.ItemsDAO items = itemsDAO.update(new items(id, item_name, price));
 		LOGGER.info("items Updated");
 		return items;
 	}
