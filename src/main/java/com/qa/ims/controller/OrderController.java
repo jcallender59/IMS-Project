@@ -36,7 +36,7 @@ public class OrderController implements CrudController<Orders> {
 	 */
 	@Override
 	public List<Orders> readAll() {
-		List<Orders> orders = OrdersDAO.readAll();
+		List<Orders> orders = ordersDAO.readAll();
 		for (Orders order : orders) {
 			LOGGER.info(order.toStringExtended());
 		}
@@ -50,7 +50,7 @@ public class OrderController implements CrudController<Orders> {
 	public Orders create() {
 		LOGGER.info("Please enter a customer id");
 		Long customerId = utils.getLong();
-		Orders order = ordersDAO.create(new Orders(customer_ID));
+		Orders order = ordersDAO.create(new Orders(customerId));
 		LOGGER.info("Order created");
 		return order;
 	}

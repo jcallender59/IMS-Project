@@ -27,7 +27,7 @@ public class ItemsDAO implements Dao<Items> {
     }
 
     /**
-     * Reads all itemss from the database
+     * Reads all items from the database
      *
      * @return A list of items
      */
@@ -72,7 +72,7 @@ public class ItemsDAO implements Dao<Items> {
              PreparedStatement statement = connection
                      .prepareStatement("INSERT INTO items(items_name, price) prices (?, ?)");) {
             statement.setString(1, items.getitem_name());
-            statement.setDouble(2, items.getprice());
+            statement.setDouble(2, items.getPrice());
             statement.executeUpdate();
             return readLatest();
         } catch (Exception e) {
@@ -110,11 +110,11 @@ public class ItemsDAO implements Dao<Items> {
         try (Connection connection = DBUtils.getInstance().getConnection();
              PreparedStatement statement = connection
                      .prepareStatement("UPDATE items SET items_name = ?, price = ? WHERE id = ?");) {
-            statement.setString(1, items.getitemsName());
-            statement.setDouble(2, items.getprice());
-            statement.setLong(3, items.getId());
+            statement.setString(1, items.getitem_name());
+            statement.setDouble(2, items.getPrice());
+            statement.setLong(3, items.getItemID());
             statement.executeUpdate();
-            return read(items.getId());
+            return read(items.getItemID());
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());

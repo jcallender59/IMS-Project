@@ -2,15 +2,15 @@ package com.qa.ims.controller;
 
 import java.util.List;
 
-import com.qa.ims.persistence.domain.Items;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.ItemsDAO;
+import com.qa.ims.persistence.domain.Items;
 import com.qa.ims.utils.Utils;
 
 /**
- * Takes in items details for CRUD functionality
+ * Takes in item details for CRUD functionality
  *
  */
 public class ItemsController implements CrudController<Items> {
@@ -31,56 +31,53 @@ public class ItemsController implements CrudController<Items> {
 	 */
 	@Override
 	public List<Items> readAll() {
-		List<Items> items = ItemsDAO.readAll();
-		for (Items items : items) {
-			LOGGER.info(items);
+		List<Items> items = itemsDAO.readAll();
+		for (Items item : items) {
+			LOGGER.info(item);
 		}
 		return items;
 	}
 
 	/**
-	 * Creates a items by taking in user input
+	 * Creates a item by taking in user input
 	 */
 	@Override
-	public com.qa.ims.persistence.dao.ItemsDAO create() {
+	public Items create() {
 		LOGGER.info("Please enter an item name");
-		String item_name = Utils.getString();
-		LOGGER.info("Please enter a price");
-		Double price= Utils.getDouble();
-		com.qa.ims.persistence.dao.ItemsDAO items = ItemsDAO.create(new Items(item_name, price));
-		LOGGER.info("items created");
-		return items;
+		String itemName = utils.getString();
+		LOGGER.info("Please enter a value");
+		Double value = utils.getDouble();
+		Items item = itemsDAO.create(new Items(itemName, value));
+		LOGGER.info("Item created");
+		return item;
 	}
 
 	/**
-	 * Updates an existing items by taking in user input
+	 * Updates an existing item by taking in user input
 	 */
 	@Override
-	public com.qa.ims.persistence.dao.ItemsDAO update() {
-		LOGGER.info("Please enter the id of the items you would like to update");
-		Long ItemID = utils.getLong();
+	public Items update() {
+		LOGGER.info("Please enter the id of the item you would like to update");
+		Long id = utils.getLong();
 		LOGGER.info("Please enter an item name");
-		String firstName = utils.getString();
-		LOGGER.info("Please enter a price");
-		Double price = utils.getDouble();
-		com.qa.ims.persistence.dao.ItemsDAO items = itemsDAO.update(new items(id, item_name, price));
-		LOGGER.info("items Updated");
-		return items;
+		String itemName = utils.getString();
+		LOGGER.info("Please enter a value");
+		Double value = utils.getDouble();
+		Items item = itemsDAO.update(new Items(id, itemName, value));
+		LOGGER.info("Item Updated");
+		return item;
 	}
 
 	/**
-	 * Deletes an existing items by the id of the items
-	 * 
+	 * Deletes an existing item by the id of the customer
+	 *
 	 * @return
 	 */
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the id of the items you would like to delete");
-		Long ItemID = utils.getLong();
+		LOGGER.info("Please enter the id of the item you would like to delete");
+		Long id = utils.getLong();
 		return itemsDAO.delete(id);
 	}
 
 }
-
-
-

@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.qa</groupId>
 	<artifactId>ims</artifactId>
@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>nl.jqno.equalsverifier</groupId>
 			<artifactId>equalsverifier</artifactId>
-			<version>3.4.1</version>
+			<version>3.9</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -47,19 +47,18 @@
 			<version>3.7.7</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.8.2</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
 		<plugins>
-			<!-- Creates a jar for the code (does not contain other dependencies which 
+			<!-- Creates a jar for the code (does not contain other dependencies which
 				are needed for the project to run out of the box) -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -75,7 +74,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- Creates a "fat jar" with jar-with-dependencies at the end of the 
+			<!-- Creates a "fat jar" with jar-with-dependencies at the end of the
 				project jar -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -109,7 +108,7 @@
 				</executions>
 			</plugin>
 
-			<!-- Plugin for code coverage. Useful as sonarqube integrates well with 
+			<!-- Plugin for code coverage. Useful as sonarqube integrates well with
 				jacoco -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
