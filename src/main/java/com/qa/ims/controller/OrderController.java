@@ -15,8 +15,7 @@ import com.qa.ims.utils.Utils;
 /**
  * Takes in order details for CRUD functionality
  *
- */
-public class OrderController implements CrudController<Orders> {
+ */public class OrderController implements CrudController<Orders> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
@@ -30,7 +29,6 @@ public class OrderController implements CrudController<Orders> {
 		this.ordersDAO = orderDAO;
 		this.utils = utils;
 	}
-
 	/**
 	 * Reads all orders to the logger
 	 */
