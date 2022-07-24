@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.qa.ims.persistence.dao.OrdersItemsDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -80,7 +79,6 @@ public class ItemControllerTest {
         Mockito.verify(utils, Mockito.times(1)).getLong();
         Mockito.verify(DAO, Mockito.times(1)).delete(id);
     }
-
     @Test
     public void TestReadAll() {
         final List<Items> items = new ArrayList<Items>();
