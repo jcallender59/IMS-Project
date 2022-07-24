@@ -36,7 +36,7 @@ import com.qa.ims.utils.Utils;
 	public List<Orders> readAll() {
 		List<Orders> orders = ordersDAO.readAll();
 		for (Orders order : orders) {
-			LOGGER.info(order.toStringExtended());
+			LOGGER.info(order);
 		}
 		return orders;
 	}
@@ -47,8 +47,8 @@ import com.qa.ims.utils.Utils;
 	@Override
 	public Orders create() {
 		LOGGER.info("Please enter a customer id");
-		Long customer_ID = utils.getLong();
-		Orders order = ordersDAO.create(new Orders(customer_ID));
+		Long customerID = utils.getLong();
+		Orders order = ordersDAO.create(new Orders(customerID));
 		LOGGER.info("Order created");
 		return order;
 	}

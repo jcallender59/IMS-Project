@@ -16,25 +16,25 @@ public class OrdersItemsDAO {
 
     public static final Logger LOGGER = LogManager.getLogger();
 
+    ItemsDAO itemsDAO = new ItemsDAO();
+    OrdersDAO ordersDAO = new OrdersDAO();
+
     public OrdersItems modelFromResultSet(ResultSet resultSet) throws SQLException {
-        Long orderId = resultSet.getLong("order_ID");
-        Long itemId = resultSet.getLong("item_ID");
+        Long orderId = resultSet.getLong("order_id");
+        Long itemId = resultSet.getLong("item_id");
         Long quantity = resultSet.getLong("quantity");
         return new OrdersItems(orderId, itemId, quantity);
     }
 
     public String modelFromResultSetCost(ResultSet resultSet) throws SQLException {
-        return "Order id: " + resultSet.getString("order_ID") + " Total Cost: £" + resultSet.getDouble("cost");
+        return "Order id: " + resultSet.getString("order_ID") + "Total Cost: £" + resultSet.getDouble("cost");
     }
 
-    /**
-     * Reads the latest OrdersItems entry in the database
-     * @return the most recent OrdersItems
-     */
+
     public OrdersItems readLatest() {
         try (Connection connection = DBUtils.getInstance().getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM orders_items ORDER BY fk_order_id DESC LIMIT 1");) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM orders_items ORDER BY id DESC LIMIT 1");) {
             resultSet.next();
             return modelFromResultSet(resultSet);
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class OrdersItemsDAO {
     public OrdersItems create(OrdersItems ordersItems) {
         try (Connection connection = DBUtils.getInstance().getConnection();
              PreparedStatement statement = connection
-                     .prepareStatement("INSERT INTO orders_items(fk_order_id, fk_item_id, quantity) VALUES (?, ?, ?)");) {
+                     .prepareStatement("INSERT INTO orders_items(order_id, item_id, quantity) VALUES (?, ?, ?)");) {
             statement.setLong(1, ordersItems.getOrderId());
             statement.setLong(2, ordersItems.getItemId());
             statement.setLong(3, ordersItems.getQuantity());
@@ -74,7 +74,7 @@ public class OrdersItemsDAO {
      */
     public String calculateCost(Long orderId) {
         try (Connection connection = DBUtils.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT oi.fk_order_id, sum(oi.quantity*i.value) AS cost FROM orders_items oi JOIN items i ON i.id = oi.fk_item_id WHERE oi.fk_order_id = ? ORDER BY cost;");) {
+             PreparedStatement statement = connection.prepareStatement("SELECT oi.order_id, sum(oi.quantity*i.price) AS cost FROM orders_items oi JOIN items i ON i.item_id = oi.item_id WHERE oi.order_id = ? ORDER BY cost;");) {
             statement.setLong(1, orderId);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
@@ -86,17 +86,12 @@ public class OrdersItemsDAO {
         return null;
     }
 
-    /**
-     *
-     * @param orderId - The id of the order that contains an item that needs to be deleted
-     *
-     * @param itemId - The id of the item to be deleted from the order
-     *
-     * @return
-     */
+
+
+
     public int deleteItem(long orderId, long itemId) {
         try (Connection connection = DBUtils.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM orders_items WHERE fk_order_id = ? AND fk_item_id = ?");) {
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM orders_items WHERE order_id = ? AND item_id = ?");) {
             statement.setLong(1, orderId);
             statement.setLong(2, itemId);
             return statement.executeUpdate();
@@ -115,7 +110,7 @@ public class OrdersItemsDAO {
      */
     public int deleteOrder(long orderId) {
         try (Connection connection = DBUtils.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM orders_items WHERE fk_order_id = ?");) {
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM orders_items WHERE id = ?");) {
             statement.setLong(1, orderId);
             return statement.executeUpdate();
         } catch (Exception e) {
